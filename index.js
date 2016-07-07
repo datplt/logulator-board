@@ -18,5 +18,5 @@ var server = app.listen(SERVER_PORT, '0.0.0.0', function () {
   console.log('Logulator master listening at http://%s:%s', host, port);
 });
 
-//var ioserver = require('./lib/socketio-server.js');
-//ioserver.listen(server);
+var ioserver = require('./lib/socketio-server.js');
+ioserver.listen(server);
