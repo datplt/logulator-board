@@ -36,7 +36,7 @@
 
     self.socket.on('init-workers-done', function(workers) {
       workers = workers || [];
-      
+
       var workerContainer = getWorkerContainer(self.id);
 
       var workerMap = _.keyBy(workers, 'workerId');
@@ -58,7 +58,7 @@
 
         workerContainer.append(workerWidget);
       });
-      
+
       debuglog(' - create view for workers');
     })
 
@@ -81,8 +81,8 @@
       $('<div class="panel panel-info">' +
           '<div class="panel-heading">' +
             '<h3 class="panel-title">Panel title</h3>' +
-          '</div>' + 
-          '<div class="panel-body" id="workers">' + 
+          '</div>' +
+          '<div class="panel-body" id="workers">' +
           '</div>' +
         '</div>'));
     agentWidget.find('.panel-title').html(id);
@@ -101,7 +101,7 @@
     return $('<div class="panel panel-success">' +
         '<div class="panel-heading">' +
           '<h3 class="panel-title">' + workerConfig.id + '</h3>' +
-        '</div>' + 
+        '</div>' +
         '<div class="panel-body" id="buttons">' +
           '<button id="start" class="btn btn-primary">Start</button>' +
           '<button id="stop" class="btn btn-primary">Stop</button>' +
@@ -123,7 +123,7 @@
         id: agentId,
         config: agentConfig
       });
-      
+
       self.agentContexts[agentId] = {
         config: agentConfig,
         socket: agentSocket
@@ -177,7 +177,7 @@ var localagents = [
                     message: "Message include {var6}, '{var1}', {var2} and {var3}"
                 },
                 logtarget: {
-                    file: "/tmp/demo1.log",
+                    file: "/var/log/demo/demo1.log",
                 },
                 status: 0
             },{
@@ -208,7 +208,7 @@ var localagents = [
                     message: "Message JSON OBJECT: {jsonobject} done!"
                 },
                 logtarget: {
-                    file: "/tmp/demo2.log",
+                    file: "/var/log/demo/demo2.log",
                 },
                 status: 0
             },{
@@ -219,7 +219,7 @@ var localagents = [
                     message: "You can win if you want"
                 },
                 logtarget: {
-                    file: "/tmp/demo3.log",
+                    file: "/var/log/demo/demo3.log",
                 },
                 status: 0
             }
@@ -233,7 +233,7 @@ var agents = [
         workers: [
             {
                 id: "demo1",
-                frequency: 0.05,
+                frequency: 0.25,
                 model: [
                     {
                         name: "var1",
@@ -272,14 +272,29 @@ var agents = [
                     message: "Message include {var6}, '{var1}', {var2} and {var3}"
                 },
                 logtarget: {
-                    file: "/tmp/demo1.log",
+                    file: "/var/log/demo/demo1.log",
                 },
                 status: 0
             },{
                 id: "demo2",
-                frequency: 0.05,
+                frequency: 0.45,
                 model: [
-                    {
+                  {
+                      name: "appName",
+                      type: "choice",
+                      list: [
+                          "commanderApp",
+                          "passengerApp",
+                          "driverApp"
+                      ]
+                  }, {
+                      name: "platform",
+                      type: "choice",
+                      list: [
+                          "android",
+                          "iOS"
+                      ]
+                  }, {
                         name: "phone",
                         type: "choice",
                         list: [
@@ -291,30 +306,67 @@ var agents = [
                     }, {
                         name: "verifyCode",
                         type: "choice",
-                        list: [ "2385", "3487", "0923", "1288"]
+                        list: [ "1", "2385", "3487", "0923", "1288"]
+                    }, {
+                        name: "deviceToken",
+                        type: "choice",
+                        list: [
+                          "APA91bEIBhEFt_YnshgLSYBRKvWbGoKYkkwixYJXXD4owS0ie2CUNgUHjTw9ELSgGcAUJf9KFcEoP8SVP7-50-ZXhMc67kIlCN3CJnG8b4erAjKbNV_aJSIaB0Esoac7IFBCNPz0RrIC",
+                          "APA91bFEd-Z_5nAKXXiNYagSjvlS_aBYhux3lAqKGPcjLVGxJ2bmCKY_0DuU-T7Clj6I8WSuTTvzXwWKWodj8-8fAGQ2sFgGm4jxRAWH8y85oVHCNDkbukTEtilS4zPM_eXHw-4_mgbr",
+                          "APA91bHYhfxUfr1YaqhbUYUEYjrSzFvioBGEOYVEm5n2LkPWaHoesrNF8oYv1Xh0sZ6f8NR-gJkmgpMNOs2jpCMve1S5xw_moKrgKpTBsb9_s7z0MBH0FCd8_GaA7YHAKdrTZk6qdMnc",
+                          "APA91bE84rlFcvYofi3b0mT--9ypL8AXneochbS2cnCnlBwCgmtnpaSrY7MfKtHi1yaISPDqbRRxg1z0AxyxB83NXZoWS52YZqbe21AuvUCjCNeqQbb6iBmmG6Sh8fUTnKK7EXFerVpl"
+                        ]
+                    }, {
+                        name: "ime",
+                        type: "choice",
+                        list: [
+                          "352296021616980",
+                          "252296021616983",
+                          "145296021416989",
+                          "352796024656985",
+                          "253426021616967",
+                          "152436021416912"
+                        ]
+                    }, {
+                        name: "fleetId",
+                        type: "choice",
+                        list: [
+                          "abc",
+                          "def",
+                          "ghi"
+                        ]
+                    }, {
+                        name: "rv",
+                        type: "choice",
+                        list: [
+                          "3.2.0",
+                          "3.2.1",
+                          "3.3.0"
+                        ]
+                    }, {
+                        name: "appType",
+                        type: "choice",
+                        list: [
+                          "driver",
+                          "passenger",
+                          "commander"
+                        ]
                     }, {
                         name: "password",
                         type: "choice",
-                        list: ["s3cr3t", "myg0d", "web4pp"]
+                        list: [
+                          "s3cr3t",
+                          "myg0d",
+                          "web4pp"
+                        ]
                     }
                 ],
                 template: {
                     engine: "json",
-                    message: "Message JSON OBJECT: {jsonobject} done!"
+                    message: "ON:register {jsonobject}"
                 },
                 logtarget: {
-                    file: "/tmp/demo2.log",
-                },
-                status: 0
-            },{
-                id: "demo3",
-                frequency: 0.5,
-                template: {
-                    engine: "fix",
-                    message: "You can win if you want"
-                },
-                logtarget: {
-                    file: "/tmp/demo3.log",
+                    file: "/var/log/demo/demo2.log",
                 },
                 status: 0
             }
@@ -364,14 +416,29 @@ var agents = [
                     message: "Message include {var6}, '{var1}', {var2} and {var3}"
                 },
                 logtarget: {
-                    file: "/tmp/demo1.log",
+                    file: "/var/log/demo/demo1.log",
                 },
                 status: 0
             },{
                 id: "demo2",
-                frequency: 0.05,
+                frequency: 0.1,
                 model: [
-                    {
+                  {
+                      name: "appName",
+                      type: "choice",
+                      list: [
+                          "commanderApp",
+                          "passengerApp",
+                          "driverApp"
+                      ]
+                  }, {
+                      name: "platform",
+                      type: "choice",
+                      list: [
+                          "android",
+                          "iOS"
+                      ]
+                  }, {
                         name: "phone",
                         type: "choice",
                         list: [
@@ -383,30 +450,67 @@ var agents = [
                     }, {
                         name: "verifyCode",
                         type: "choice",
-                        list: [ "2385", "3487", "0923", "1288"]
+                        list: [ "1", "1234", "4321", "1111", "8888"]
+                    }, {
+                        name: "deviceToken",
+                        type: "choice",
+                        list: [
+                          "APA11bEIBhEFt_YnshgLSYBRKvWbGoKYkkwixYJXXD4owS0ie2CUNgUHjTw9ELSgGcAUJf9KFcEoP8SVP7-50-ZXhMc67kIlCN3CJnG8b4erAjKbNV_aJSIaB0Esoac7IFBCNPz0RrIC",
+                          "APA21bFEd-Z_5nAKXXiNYagSjvlS_aBYhux3lAqKGPcjLVGxJ2bmCKY_0DuU-T7Clj6I8WSuTTvzXwWKWodj8-8fAGQ2sFgGm4jxRAWH8y85oVHCNDkbukTEtilS4zPM_eXHw-4_mgbr",
+                          "APA31bHYhfxUfr1YaqhbUYUEYjrSzFvioBGEOYVEm5n2LkPWaHoesrNF8oYv1Xh0sZ6f8NR-gJkmgpMNOs2jpCMve1S5xw_moKrgKpTBsb9_s7z0MBH0FCd8_GaA7YHAKdrTZk6qdMnc",
+                          "APA41bE84rlFcvYofi3b0mT--9ypL8AXneochbS2cnCnlBwCgmtnpaSrY7MfKtHi1yaISPDqbRRxg1z0AxyxB83NXZoWS52YZqbe21AuvUCjCNeqQbb6iBmmG6Sh8fUTnKK7EXFerVpl"
+                        ]
+                    }, {
+                        name: "ime",
+                        type: "choice",
+                        list: [
+                          "952296021616980",
+                          "852296021616983",
+                          "745296021416989",
+                          "652796024656985",
+                          "553426021616967",
+                          "452436021416912"
+                        ]
+                    }, {
+                        name: "fleetId",
+                        type: "choice",
+                        list: [
+                          "uvt",
+                          "lmn",
+                          "xyz"
+                        ]
+                    }, {
+                        name: "rv",
+                        type: "choice",
+                        list: [
+                          "3.2.0",
+                          "3.2.1",
+                          "3.3.0"
+                        ]
+                    }, {
+                        name: "appType",
+                        type: "choice",
+                        list: [
+                          "driver",
+                          "passenger",
+                          "commander"
+                        ]
                     }, {
                         name: "password",
                         type: "choice",
-                        list: ["s3cr3t", "myg0d", "web4pp"]
+                        list: [
+                          "s3cr3t",
+                          "myg0d",
+                          "web4pp"
+                        ]
                     }
                 ],
                 template: {
                     engine: "json",
-                    message: "Message JSON OBJECT: {jsonobject} done!"
+                    message: "ON:register {jsonobject}"
                 },
                 logtarget: {
-                    file: "/tmp/demo2.log",
-                },
-                status: 0
-            },{
-                id: "demo3",
-                frequency: 0.5,
-                template: {
-                    engine: "fix",
-                    message: "You can win if you want"
-                },
-                logtarget: {
-                    file: "/tmp/demo3.log",
+                      file: "/var/log/demo/demo2.log",
                 },
                 status: 0
             }
@@ -416,5 +520,5 @@ var agents = [
 
 var clientManager = null;
 window.addEventListener('load', function() {
-  clientManager = new ClientManager({agents: localagents});
+  clientManager = new ClientManager({agents: agents});
 });
