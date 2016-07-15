@@ -23,15 +23,11 @@
     });
 
     self.socket.on('start-worker-done', function(result) {
-      var worker = getWorker(self.id, result.workerId);
-      worker.find('button#start').addClass('disabled');
-      worker.find('button#stop').removeClass('disabled');
+      turnonWorker(self.id, result.workerId, true);
     })
 
     self.socket.on('stop-worker-done', function(result) {
-      var worker = getWorker(self.id, result.workerId);
-      worker.find('button#start').removeClass('disabled');
-      worker.find('button#stop').addClass('disabled');
+      turnonWorker(self.id, result.workerId, false);
     })
 
     self.socket.on('init-workers-done', function(workers) {
@@ -55,8 +51,9 @@
         workerWidget.find('button#stop').click(function() {
           self.socket.emit('stop-worker', { id: worker.id});
         });
-
         workerContainer.append(workerWidget);
+
+        turnonWorker(self.id, worker.id, false);
       });
 
       debuglog(' - create view for workers');
@@ -95,6 +92,17 @@
 
   var getWorker = function(agentId, workerId) {
     return $('#widget-panel div[agent-id="' + agentId + '"] #workers div[worker-id="' + workerId + '"]');
+  }
+
+  var turnonWorker = function(agentId, workerId, enabled) {
+    var worker = getWorker(agentId, workerId);
+    if (enabled) {
+      worker.find('button#start').addClass('disabled');
+      worker.find('button#stop').removeClass('disabled');
+    } else {
+      worker.find('button#start').removeClass('disabled');
+      worker.find('button#stop').addClass('disabled');
+    }
   }
 
   var createWorkerWidget = function(workerConfig) {
