@@ -10,6 +10,7 @@ var debuglog = debug('logulator:master:main');
 
 var app = express();
 
+app.use('/bootstrap-slider', express.static(__dirname + '/node_modules/bootstrap-slider/dist'));
 app.use('/', express.static(path.join(__dirname, './public')));
 
 var server = app.listen(SERVER_PORT, '0.0.0.0', function () {

@@ -1,3 +1,5 @@
+var AGENT_VERSION = '^0.1.2';
+
 (function(exports, $, _) {
 
   var ClientWebsocket = exports.ClientWebsocket = function(params) {
@@ -48,18 +50,46 @@
         workerWidget.find('button#start').click(function() {
           self.socket.emit('start-worker', { id: worker.id});
         });
+
         workerWidget.find('button#stop').click(function() {
           self.socket.emit('stop-worker', { id: worker.id});
         });
+
+        workerWidget.find("#timeSlider").slider();
+        workerWidget.find("#timeSlider").on("slideStop", function(slideEvt) {
+        	self.socket.emit('update-frequency', { id: worker.id, delayTime: slideEvt.value });
+        });
+
+        workerWidget.find("#delayOffsetSlider").slider();
+        workerWidget.find("#delayOffsetSlider").on("slideStop", function(slideEvt) {
+          self.socket.emit('update-frequency', { id: worker.id, delayOffset: slideEvt.value });
+        });
+
         workerContainer.append(workerWidget);
 
         turnonWorker(self.id, worker.id, false);
       });
 
       debuglog(' - create view for workers');
-    })
+    });
 
-    self.socket.emit('init-workers', self.config.workers);
+    self.socket.on('connect-agent-done', function(result) {
+      if (_.isEmpty(result.status)) {
+        debuglog(' + agent information: %s', JSON.stringify(result));
+
+      } else if (result.status == 'pass') {
+        debuglog(' + agent version is valid: %s', JSON.stringify(result));
+        self.socket.emit('init-workers', self.config.workers);
+      } else if (result.status == 'fail') {
+        debuglog(' + agent version is invalid: %s', JSON.stringify(result));
+      }
+    });
+
+    self.socket.emit('connect-agent', {
+      agent: {
+        version: AGENT_VERSION
+      }
+    });
 
     debuglog(' - ClientWebsocket constructor has been done.');
   };
@@ -113,6 +143,12 @@
         '<div class="panel-body" id="buttons">' +
           '<button id="start" class="btn btn-primary">Start</button>' +
           '<button id="stop" class="btn btn-primary">Stop</button>' +
+          '<span>&nbsp;&nbsp;&nbsp;</span>' +
+          '<input id="timeSlider" type="text" data-slider-min="5" data-slider-max="5000" data-slider-step="10" data-slider-value="500"/>' +
+          '<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>' +
+          '<input id="delayOffsetSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="10"/>' +
+          '<span>&nbsp;&nbsp;&nbsp;</span>' +
+          '<span id="timeSliderValLabel">Current Slider Value: <span id="timeSliderVal">3</span></span>' +
         '</div>' +
       '</div>').attr('worker-id', workerConfig.id);
   }
@@ -142,8 +178,7 @@
 
 var clientManager = null;
 window.addEventListener('load', function() {
-  $.getJSON("config/local.json", {
-  }).done(function( agents ) {
+  $.getJSON("config/local.json", {}).done(function( agents ) {
     clientManager = new ClientManager({
       agents: agents
     });

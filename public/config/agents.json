@@ -4,6 +4,8 @@
         "workers": [
             {
                 "id": "demo1",
+                "delayTime": 250,
+                "delayOffset": 10,
                 "frequency": 0.25,
                 "model": [
                     {
@@ -48,6 +50,8 @@
                 "status": 0
             },{
                 "id": "demo2",
+                "delayTime": 450,
+                "delayOffset": 50,
                 "frequency": 0.45,
                 "model": [
                   {
@@ -148,6 +152,8 @@
         "workers": [
             {
                 "id": "demo1",
+                "delayTime": 50,
+                "delayOffset": 10,
                 "frequency": 0.05,
                 "model": [
                     {
@@ -192,6 +198,8 @@
                 "status": 0
             },{
                 "id": "demo2",
+                "delayTime": 100,
+                "delayOffset": 10,
                 "frequency": 0.1,
                 "model": [
                   {
