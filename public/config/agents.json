@@ -4,9 +4,10 @@
         "workers": [
             {
                 "id": "demo1",
-                "delayTime": 250,
-                "delayOffset": 10,
-                "frequency": 0.25,
+                "delaytime": {
+                    "segment": 250,
+                    "offset": 10
+                },
                 "model": [
                     {
                         "name": "var1",
@@ -50,9 +51,10 @@
                 "status": 0
             },{
                 "id": "demo2",
-                "delayTime": 450,
-                "delayOffset": 50,
-                "frequency": 0.45,
+                "delaytime": {
+                    "segment": 450,
+                    "offset": 50
+                },
                 "model": [
                   {
                       "name": "appName",
@@ -152,9 +154,10 @@
         "workers": [
             {
                 "id": "demo1",
-                "delayTime": 50,
-                "delayOffset": 10,
-                "frequency": 0.05,
+                "delaytime": {
+                    "segment": 50,
+                    "offset": 10
+                },
                 "model": [
                     {
                         "name": "var1",
@@ -198,9 +201,10 @@
                 "status": 0
             },{
                 "id": "demo2",
-                "delayTime": 100,
-                "delayOffset": 10,
-                "frequency": 0.1,
+                "delaytime": {
+                    "segment": 100,
+                    "offset": 10
+                },
                 "model": [
                   {
                       "name": "appName",

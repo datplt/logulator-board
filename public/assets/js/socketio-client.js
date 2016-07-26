@@ -1,4 +1,4 @@
-var AGENT_VERSION = '^0.1.2';
+var AGENT_VERSION = '^0.1.4';
 
 (function(exports, $, _) {
 
@@ -55,14 +55,14 @@ var AGENT_VERSION = '^0.1.2';
           self.socket.emit('stop-worker', { id: worker.id});
         });
 
-        workerWidget.find("#timeSlider").slider();
-        workerWidget.find("#timeSlider").on("slideStop", function(slideEvt) {
-        	self.socket.emit('update-frequency', { id: worker.id, delayTime: slideEvt.value });
+        workerWidget.find("#delaytimeSegmentSlider").slider();
+        workerWidget.find("#delaytimeSegmentSlider").on("slideStop", function(slideEvt) {
+        	self.socket.emit('update-delaytime', { id: worker.id, delayTime: slideEvt.value, delaytime: {segment: slideEvt.value} });
         });
 
-        workerWidget.find("#delayOffsetSlider").slider();
-        workerWidget.find("#delayOffsetSlider").on("slideStop", function(slideEvt) {
-          self.socket.emit('update-frequency', { id: worker.id, delayOffset: slideEvt.value });
+        workerWidget.find("#delaytimeOffsetSlider").slider();
+        workerWidget.find("#delaytimeOffsetSlider").on("slideStop", function(slideEvt) {
+          self.socket.emit('update-delaytime', { id: worker.id, delayOffset: slideEvt.value, delaytime: {offset: slideEvt.value} });
         });
 
         workerContainer.append(workerWidget);
@@ -144,11 +144,11 @@ var AGENT_VERSION = '^0.1.2';
           '<button id="start" class="btn btn-primary">Start</button>' +
           '<button id="stop" class="btn btn-primary">Stop</button>' +
           '<span>&nbsp;&nbsp;&nbsp;</span>' +
-          '<input id="timeSlider" type="text" data-slider-min="5" data-slider-max="5000" data-slider-step="10" data-slider-value="500"/>' +
+          '<input id="delaytimeSegmentSlider" type="text" data-slider-min="5" data-slider-max="5000" data-slider-step="10" data-slider-value="500"/>' +
           '<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>' +
-          '<input id="delayOffsetSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="10"/>' +
+          '<input id="delaytimeOffsetSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="10"/>' +
           '<span>&nbsp;&nbsp;&nbsp;</span>' +
-          '<span id="timeSliderValLabel">Current Slider Value: <span id="timeSliderVal">3</span></span>' +
+          '<span id="delaytimeInfoLabel">Segment: <span id="delaytimeSegmentVal">-1</span> / Offset: <span id="delaytimeOffsetVal">-1</span></span>' +
         '</div>' +
       '</div>').attr('worker-id', workerConfig.id);
   }
