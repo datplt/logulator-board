@@ -47,6 +47,7 @@ var AGENT_VERSION = '^0.1.4';
         }
 
         var workerWidget = createWorkerWidget(worker);
+
         workerWidget.find('button#start').click(function() {
           self.socket.emit('start-worker', { id: worker.id});
         });
@@ -55,15 +56,30 @@ var AGENT_VERSION = '^0.1.4';
           self.socket.emit('stop-worker', { id: worker.id});
         });
 
-        workerWidget.find("#delaytimeSegmentSlider").slider();
-        workerWidget.find("#delaytimeSegmentSlider").on("slideStop", function(slideEvt) {
-        	self.socket.emit('update-delaytime', { id: worker.id, delayTime: slideEvt.value, delaytime: {segment: slideEvt.value} });
+        var delaytimeSegmentSlider = workerWidget.find("#delaytimeSegmentSlider").slider({
+          id: "delaytimeSegmentSlider",
+          value: worker.delaytime.segment,
+          min: worker.delaytimeRange.segmentMin,
+          max: worker.delaytimeRange.segmentMax,
+          step: worker.delaytimeRange.segmentStep
+        }).on("slideStop", function(slideEvt) {
+        	self.socket.emit('update-delaytime', { id: worker.id, delaytime: {segment: slideEvt.value} });
+          workerWidget.find('#delaytimeSegmentVal').html(slideEvt.value);
         });
 
-        workerWidget.find("#delaytimeOffsetSlider").slider();
-        workerWidget.find("#delaytimeOffsetSlider").on("slideStop", function(slideEvt) {
-          self.socket.emit('update-delaytime', { id: worker.id, delayOffset: slideEvt.value, delaytime: {offset: slideEvt.value} });
+        var delaytimeOffsetSlider = workerWidget.find("#delaytimeOffsetSlider").slider({
+          id: "delaytimeOffsetSlider",
+          value: worker.delaytime.offset,
+          min: worker.delaytimeRange.offsetMin,
+          max: worker.delaytimeRange.offsetMax,
+          step: worker.delaytimeRange.offsetStep
+        }).on("slideStop", function(slideEvt) {
+          self.socket.emit('update-delaytime', { id: worker.id, delaytime: {offset: slideEvt.value} });
+          workerWidget.find('#delaytimeOffsetVal').html(slideEvt.value);
         });
+
+        workerWidget.find('#delaytimeSegmentVal').html(delaytimeSegmentSlider.slider('getValue'));
+        workerWidget.find('#delaytimeOffsetVal').html(delaytimeOffsetSlider.slider('getValue'));
 
         workerContainer.append(workerWidget);
 

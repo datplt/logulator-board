@@ -5,8 +5,16 @@
             {
                 "id": "demo1",
                 "delaytime": {
-                    "segment": 50,
+                    "segment": 1000,
                     "offset": 10
+                },
+                "delaytimeRange": {
+                    "segmentMin": 10,
+                    "segmentMax": 5000,
+                    "segmentStep": 5,
+                    "offsetMin": 0,
+                    "offsetMax": 100,
+                    "offsetStep": 1
                 },
                 "model": [
                     {
@@ -55,6 +63,14 @@
                     "segment": 50,
                     "offset": 10
                 },
+                "delaytimeRange": {
+                    "segmentMin": 10,
+                    "segmentMax": 5000,
+                    "segmentStep": 5,
+                    "offsetMin": 0,
+                    "offsetMax": 100,
+                    "offsetStep": 1
+                },
                 "model": [
                     {
                         "name": "phone",
@@ -88,6 +104,14 @@
                 "delaytime": {
                     "segment": 500,
                     "offset": 10
+                },
+                "delaytimeRange": {
+                    "segmentMin": 100,
+                    "segmentMax": 5000,
+                    "segmentStep": 5,
+                    "offsetMin": 0,
+                    "offsetMax": 100,
+                    "offsetStep": 1
                 },
                 "template": {
                     "engine": "fix",
