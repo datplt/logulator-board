@@ -171,10 +171,16 @@
     self.start = function () {
       ctx.firstTick = new Date();
       ctx.lastTick = new Date();
+      ctx.state = 'running';
       self.tick(0);
     };
 
+    self.stop = function() {
+      ctx.state = 'stopped';
+    };
+
     self.tick = function (id) {
+      if (ctx.state != 'running') return;
       ctx.thisTick = new Date();
       var elapsed = parseInt(ctx.thisTick - ctx.lastTick);
       var elapsedTotal = parseInt(ctx.lastTick - ctx.firstTick);

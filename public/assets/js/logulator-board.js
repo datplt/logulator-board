@@ -28,10 +28,14 @@ var AGENT_VERSION = '^0.1.5';
 
     self.socket.on('start-worker-done', function(result) {
       turnonWorker(self.id, result.workerId, true);
+      var logulatorChart = self.charts[result.workerId];
+      logulatorChart && logulatorChart.start();
     })
 
     self.socket.on('stop-worker-done', function(result) {
       turnonWorker(self.id, result.workerId, false);
+      var logulatorChart = self.charts[result.workerId];
+      logulatorChart && logulatorChart.stop();
     })
 
     self.socket.on('init-workers-done', function(workers) {
