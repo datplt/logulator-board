@@ -1,4 +1,4 @@
-var AGENT_VERSION = '^0.1.4';
+var AGENT_VERSION = '^0.1.5';
 
 (function(exports, $, _) {
 
@@ -11,6 +11,8 @@ var AGENT_VERSION = '^0.1.4';
 
     self.id = params.id;
     self.config = params.config;
+
+    self.charts = {};
 
     self.widget = buildAgentWidget(self.id, self.config);
 
@@ -83,10 +85,37 @@ var AGENT_VERSION = '^0.1.4';
 
         workerContainer.append(workerWidget);
 
+        var logulatorChart = self.charts[worker.id] = new LogulatorChart({
+          containerId: 'div[agent-id="' + self.id + '"] #workers div[worker-id="' + worker.id + '"] #linechart',
+          titleText: "Logging Frequency Diagram",
+          verticalText: "Frequency (n-logs/1s)",
+          ticks: 60
+        });
+        logulatorChart.initialize({
+          minValue: Math.floor(1000 / (worker.delaytime.segment + worker.delaytime.offset)),
+          maxValue: Math.ceil(1000 / worker.delaytime.segment)
+        });
+        logulatorChart.addSeries("Frequency");
+
         turnonWorker(self.id, worker.id, false);
       });
 
       debuglog(' - create view for workers');
+    });
+
+    self.socket.on('update-delaytime-done', function(result) {
+      var logulatorChart = self.charts[result.workerId];
+      if (!logulatorChart) return;
+      logulatorChart.initialize({
+        minValue: Math.floor(1000 / (result.new_delay_segment + result.new_delay_offset)),
+        maxValue: Math.ceil(1000 / result.new_delay_segment)
+      });
+    });
+
+    self.socket.on('state-worker', function(result) {
+      var logulatorChart = self.charts[result.workerId];
+      if (!logulatorChart) return;
+      logulatorChart.dataEntries["Frequency"] = result.frequency;
     });
 
     self.socket.on('connect-agent-done', function(result) {
@@ -165,6 +194,7 @@ var AGENT_VERSION = '^0.1.4';
           '<input id="delaytimeOffsetSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="10"/>' +
           '<span>&nbsp;&nbsp;&nbsp;</span>' +
           '<span id="delaytimeInfoLabel">Segment: <span id="delaytimeSegmentVal">-1</span> / Offset: <span id="delaytimeOffsetVal">-1</span></span>' +
+          '<div id="linechart" style="width: 100%; display: inline; float: left;"></div>' +
         '</div>' +
       '</div>').attr('worker-id', workerConfig.id);
   }
@@ -191,14 +221,3 @@ var AGENT_VERSION = '^0.1.4';
     });
   };
 })(this, jQuery, _);
-
-var clientManager = null;
-window.addEventListener('load', function() {
-  $.getJSON("config/local.json", {}).done(function( agents ) {
-    clientManager = new ClientManager({
-      agents: agents
-    });
-  }).fail(function(error) {
-    console.log( "error: " + JSON.stringify(error));
-  });
-});

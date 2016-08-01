@@ -12,42 +12,17 @@
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <script src="/bootstrap-slider/bootstrap-slider.js"></script>
-    <script src="/assets/js/socketio-client.js"></script>
+    <script src="/d3/d3.v3.min.js" type="text/javascript"></script>
+    <script src="/guid/guid.js" type="text/javascript"></script>
+    <script src="/assets/js/logulator-chart.js"></script>
+    <script src="/assets/js/logulator-board.js"></script>
+    <script src="/assets/js/logulator-launcher.js"></script>
 </head>
 
 <body>
     <div id="wrapper" class="container">
         <h1 id="title">Logulator Master</h1>
         <h4 id="sub-title">(Logging Simulator)</h4>
-
-        <div id="control" class="row">
-            <div class="col-md-8">
-            <div class="panel panel-info">
-                <div class="panel-body" id="patterns-body">
-                <label for"pattern-list">Use pattern:</label>&nbsp;
-                <select id="pattern-list">
-                    <option value="Gosper-glider-gun" checked="checked">Gosper glider gun</option>
-                    <option value="Acorn">Acorn</option>
-                    <option value="Diehard">Diehard</option>
-                </select>
-                &nbsp;or&nbsp;
-                <button id='random' class="btn btn-primary">Random</button>
-                &nbsp;
-                <label for="checkbox_toroidal">Space is a toroidal matrix:&nbsp;<input id="checkbox_toroidal" type="checkbox" /></label>
-                </div>
-            </div>
-            </div>
-            <div class="col-md-4">
-                <div class="panel panel-info">
-                <div class="panel-body">
-                <button id='start' class="btn btn-primary">Start</button>
-                <button id='stop' class="btn btn-primary">Stop</button>
-                <button id='step' class="btn btn-primary">Step</button>
-                <button id='reset' class="btn btn-primary">Reset</button>
-                </div>
-            </div>
-            </div>
-        </div>
 
         <div class="row">
             <div class="col-md-12" id="widget-panel"></div>

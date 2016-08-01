@@ -1,6 +1,6 @@
 {
   "name": "logulator",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "logulator master application",
   "main": "index.js",
   "scripts": {
@@ -9,8 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bootstrap-slider": "^9.1.1",
+    "d3": "^3.5.17",
     "debug": "^2.2.0",
     "express": "^4.14.0",
+    "guid": "0.0.12",
     "socket.io": "^1.4.8",
     "socket.io-client": "^1.4.8"
   }

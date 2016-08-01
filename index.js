@@ -11,6 +11,8 @@ var debuglog = debug('logulator:master:main');
 var app = express();
 
 app.use('/bootstrap-slider', express.static(__dirname + '/node_modules/bootstrap-slider/dist'));
+app.use('/d3/d3.v3.min.js', express.static(__dirname + '/node_modules/d3/d3.min.js'));
+app.use('/guid/guid.js', express.static(__dirname + '/node_modules/guid/guid.js'));
 app.use('/', express.static(path.join(__dirname, './public')));
 
 var server = app.listen(SERVER_PORT, '0.0.0.0', function () {
