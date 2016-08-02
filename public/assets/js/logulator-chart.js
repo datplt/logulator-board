@@ -121,12 +121,12 @@
         .attr("transform", "translate(" + (ctx.width / ctx.ticks) + "," + 0 + ")");
 
       // Render horizontal grid lines
-      ctx.svg.selectAll(".hline").data(d3.range(ctx.ticks)).enter()
+      ctx.svg.selectAll(".hline").data(d3.range(ctx.maxValue - ctx.minValue)).enter()
         .append("line")
         .attr("x1", function (d) { return 0; })
         .attr("x2", function (d) { return ctx.width; })
-        .attr("y1", function (d) { return d * (ctx.height / (ctx.maxValue / 10)); })
-        .attr("y2", function (d) { return d * (ctx.height / (ctx.maxValue / 10)); })
+        .attr("y1", function (d) { return d * (ctx.height / (ctx.maxValue - ctx.minValue)); })
+        .attr("y2", function (d) { return d * (ctx.height / (ctx.maxValue - ctx.minValue)); })
         .style("stroke", "#282C34")
         .style("opacity", .5)
         .attr("clip-path", "url(#clip-" + ctx.id + ")")
