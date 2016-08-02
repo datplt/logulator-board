@@ -16,6 +16,10 @@
                     "offsetMax": 100,
                     "offsetStep": 1
                 },
+                "tick": {
+                    "amount": 12,
+                    "duration": 5000
+                },
                 "model": [
                     {
                         "name": "var1",
@@ -71,6 +75,10 @@
                     "offsetMax": 100,
                     "offsetStep": 1
                 },
+                "tick": {
+                    "amount": 60,
+                    "duration": 1000
+                },
                 "model": [
                     {
                         "name": "phone",
@@ -112,6 +120,10 @@
                     "offsetMin": 0,
                     "offsetMax": 100,
                     "offsetStep": 1
+                },
+                "tick": {
+                    "amount": 60,
+                    "duration": 1000
                 },
                 "template": {
                     "engine": "fix",

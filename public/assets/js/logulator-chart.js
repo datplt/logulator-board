@@ -5,7 +5,7 @@
     var ctx = {};
 
     ctx.container = params.containerId;
-    ctx.id = Guid.raw();
+    ctx.id = params.id || Guid.raw();
     ctx.titleText = params.titleText || '';
     ctx.ticks = params.ticks || 20;
     ctx.tickDuration = params.tickDuration || 1000;
@@ -16,7 +16,7 @@
     ctx.margin = { top: 50, right: 40, bottom: 50, left: 80 };
     ctx.width = ctx.boxWidth - ctx.margin.left - ctx.margin.right;
     ctx.height = ctx.boxHeight - ctx.margin.top - ctx.margin.bottom;
-    ctx.xText = '';
+    ctx.xText = params.horizontalText || '';
     ctx.yText = params.verticalText || '';
     ctx.dataSeries = [];
 
@@ -25,6 +25,8 @@
     self.initialize = function (opts) {
       opts = opts || {};
 
+      ctx.ticks = opts.ticks || ctx.ticks;
+      ctx.tickDuration = opts.tickDuration || ctx.tickDuration;
       ctx.minValue = opts.minValue || ctx.minValue;
       ctx.maxValue = opts.maxValue || ctx.maxValue;
 
@@ -49,27 +51,27 @@
       ctx.color.domain(ctx.dataSeries.map(function (d) { return d.Name; }));
 
       // Define xscale, yscale
-      ctx.xscale = d3.scale.linear().domain([0, ctx.ticks]).range([0, ctx.width]);
-      ctx.yscale = d3.scale.linear().domain([ctx.minValue, ctx.maxValue]).range([ctx.height, 0]);
+      ctx.xScale = d3.scale.linear().domain([0, ctx.ticks]).range([0, ctx.width]);
+      ctx.yScale = d3.scale.linear().domain([ctx.minValue, ctx.maxValue]).range([ctx.height, 0]);
 
       // Define xAxis, yAxis
       ctx.xAxis = d3.svg.axis()
         .scale(d3.scale.linear().domain([0, ctx.ticks]).range([ctx.width, 0]))
         .orient("bottom");
       ctx.yAxis = d3.svg.axis()
-        .scale(ctx.yscale)
+        .scale(ctx.yScale)
         .orient("left");
 
       // Define Line/Area Chart
       ctx.line = d3.svg.line()
         .interpolate("basis")
-        .x(function (d, i) { return ctx.xscale(i-1); })
-        .y(function (d) { return ctx.yscale(d.Value); });
+        .x(function (d, i) { return ctx.xScale(i-1); })
+        .y(function (d) { return ctx.yScale(d.Value); });
       ctx.area = d3.svg.area()
         .interpolate("basis")
-        .x(function (d, i) { return ctx.xscale(i-1); })
+        .x(function (d, i) { return ctx.xScale(i-1); })
         .y0(ctx.height)
-        .y1(function (d) { return ctx.yscale(d.Value); });
+        .y1(function (d) { return ctx.yScale(d.Value); });
 
       // Render chart title
       ctx.title = ctx.svg.append("text")
@@ -84,7 +86,7 @@
       // Render xAxis text
       ctx.svg.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + ctx.yscale(ctx.minValue) + ")")
+        .attr("transform", "translate(0," + ctx.yScale(ctx.minValue) + ")")
         .call(ctx.xAxis)
         .append("text")
         .attr("id", "xName-" + ctx.id)
@@ -212,7 +214,7 @@
         .transition()
         .duration(ctx.tickDuration)
         .ease("linear")
-        .attr("transform", "translate(" + ctx.xscale(-1) + ",0)")
+        .attr("transform", "translate(" + ctx.xScale(-1) + ",0)")
         .each("end", function (d, i) { self.tick(i); });
 
       //Remove oldest values

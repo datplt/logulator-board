@@ -93,11 +93,12 @@ var AGENT_VERSION = '^0.1.5';
           containerId: 'div[agent-id="' + self.id + '"] #workers div[worker-id="' + worker.id + '"] #linechart',
           titleText: "Logging Frequency Diagram",
           verticalText: "Frequency (n-logs/1s)",
-          ticks: 60
+          ticks: worker.tick.amount,
+          tickDuration: worker.tick.duration
         });
         logulatorChart.initialize({
-          minValue: Math.floor(1000 / (worker.delaytime.segment + worker.delaytime.offset)),
-          maxValue: Math.ceil(1000 / worker.delaytime.segment)
+          minValue: Math.floor(worker.tick.duration / (worker.delaytime.segment + worker.delaytime.offset)),
+          maxValue: Math.ceil(worker.tick.duration / worker.delaytime.segment)
         });
         logulatorChart.addSeries("Frequency");
 
@@ -111,8 +112,8 @@ var AGENT_VERSION = '^0.1.5';
       var logulatorChart = self.charts[result.workerId];
       if (!logulatorChart) return;
       logulatorChart.initialize({
-        minValue: Math.floor(1000 / (result.new_delay_segment + result.new_delay_offset)),
-        maxValue: Math.ceil(1000 / result.new_delay_segment)
+        minValue: result.minFrequency,
+        maxValue: result.maxFrequency
       });
     });
 
@@ -169,12 +170,12 @@ var AGENT_VERSION = '^0.1.5';
     return $('#widget-panel div[agent-id="' + agentId + '"] #workers');
   }
 
-  var getWorker = function(agentId, workerId) {
+  var getWorkerWidget = function(agentId, workerId) {
     return $('#widget-panel div[agent-id="' + agentId + '"] #workers div[worker-id="' + workerId + '"]');
   }
 
   var turnonWorker = function(agentId, workerId, enabled) {
-    var worker = getWorker(agentId, workerId);
+    var worker = getWorkerWidget(agentId, workerId);
     if (enabled) {
       worker.find('button#start').addClass('disabled');
       worker.find('button#stop').removeClass('disabled');
