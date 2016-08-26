@@ -58,7 +58,7 @@
                     "message": "Message include {var6}, '{var1}', {var2} and {var3}"
                 },
                 "logtarget": {
-                    "file": "/var/log/demo/demo1.log"
+                    "file": "/var/log/demo1/demo.log"
                 },
                 "status": 0
             },{
@@ -167,7 +167,7 @@
                     "message": "ON:register {jsonobject}"
                 },
                 "logtarget": {
-                    "file": "/var/log/demo/demo2.log"
+                    "file": "/var/log/demo2/demo.log"
                 },
                 "status": 0
             }
@@ -232,7 +232,7 @@
                     "message": "Message include {var6}, '{var1}', {var2} and {var3}"
                 },
                 "logtarget": {
-                    "file": "/var/log/demo/demo1.log"
+                    "file": "/var/log/demo1/demo.log"
                 },
                 "status": 0
             },{
@@ -341,7 +341,7 @@
                     "message": "ON:register {jsonobject}"
                 },
                 "logtarget": {
-                    "file": "/var/log/demo/demo2.log"
+                    "file": "/var/log/demo2/demo.log"
                 },
                 "status": 0
             }
