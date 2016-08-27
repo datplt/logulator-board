@@ -53,7 +53,8 @@
                         "type": "datetime"
                     }
                 ],
-                "logtarget": {
+                "target": {
+                    "type": "logfile",
                     "file": "/var/log/demo1/demo.log",
                     "template": {
                         "engine": "string-format",
@@ -162,7 +163,8 @@
                         ]
                     }
                 ],
-                "logtarget": {
+                "target": {
+                    "type": "logfile",
                     "file": "/var/log/demo2/demo.log",
                     "template": {
                         "engine": "json",
@@ -227,7 +229,8 @@
                         "type": "datetime"
                     }
                 ],
-                "logtarget": {
+                "target": {
+                    "type": "logfile",
                     "file": "/var/log/demo1/demo.log",
                     "template": {
                         "engine": "string-format",
@@ -336,7 +339,8 @@
                         ]
                     }
                 ],
-                "logtarget": {
+                "target": {
+                    "type": "logfile",
                     "file": "/var/log/demo2/demo.log",
                     "template": {
                         "engine": "json",

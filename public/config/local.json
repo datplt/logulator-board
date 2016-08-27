@@ -53,7 +53,8 @@
                         "type": "datetime"
                     }
                 ],
-                "logtarget": {
+                "target": {
+                    "type": "logfile",
                     "file": "/tmp/demo1.log",
                     "template": {
                         "engine": "string-format",
@@ -99,7 +100,8 @@
                         "list": ["s3cr3t", "myg0d", "web4pp"]
                     }
                 ],
-                "logtarget": {
+                "target": {
+                    "type": "logfile",
                     "file": "/tmp/demo2.log",
                     "template": {
                         "engine": "json",
@@ -125,7 +127,8 @@
                     "amount": 60,
                     "duration": 1000
                 },
-                "logtarget": {
+                "target": {
+                    "type": "logfile",
                     "file": "/tmp/demo3.log",
                     "template": {
                         "engine": "fix",
