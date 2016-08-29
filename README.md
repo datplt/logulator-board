@@ -1,1 +1,1 @@
-# logulator
+# logulator-board

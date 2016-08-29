@@ -1,4 +1,4 @@
-var AGENT_VERSION = '^0.1.5';
+var AGENT_VERSION = '^0.1.7';
 
 (function(exports, $, _) {
 

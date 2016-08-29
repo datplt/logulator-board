@@ -1,6 +1,6 @@
 {
   "name": "logulator",
-  "version": "0.0.3",
+  "version": "0.1.7",
   "description": "logulator master application",
   "main": "index.js",
   "scripts": {

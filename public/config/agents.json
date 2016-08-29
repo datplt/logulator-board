@@ -53,12 +53,13 @@
                         "type": "datetime"
                     }
                 ],
-                "template": {
-                    "engine": "string-format",
-                    "message": "Message include {var6}, '{var1}', {var2} and {var3}"
-                },
-                "logtarget": {
-                    "file": "/var/log/demo1/demo.log"
+                "target": {
+                    "type": "logfile",
+                    "file": "/var/log/demo1/demo.log",
+                    "template": {
+                        "engine": "string-format",
+                        "message": "Message include {var6}, '{var1}', {var2} and {var3}"
+                    }
                 },
                 "status": 0
             },{
@@ -162,12 +163,13 @@
                         ]
                     }
                 ],
-                "template": {
-                    "engine": "json",
-                    "message": "ON:register {jsonobject}"
-                },
-                "logtarget": {
-                    "file": "/var/log/demo2/demo.log"
+                "target": {
+                    "type": "logfile",
+                    "file": "/var/log/demo2/demo.log",
+                    "template": {
+                        "engine": "json",
+                        "message": "ON:register {jsonobject}"
+                    }
                 },
                 "status": 0
             }
@@ -227,12 +229,13 @@
                         "type": "datetime"
                     }
                 ],
-                "template": {
-                    "engine": "string-format",
-                    "message": "Message include {var6}, '{var1}', {var2} and {var3}"
-                },
-                "logtarget": {
-                    "file": "/var/log/demo1/demo.log"
+                "target": {
+                    "type": "logfile",
+                    "file": "/var/log/demo1/demo.log",
+                    "template": {
+                        "engine": "string-format",
+                        "message": "Message include {var6}, '{var1}', {var2} and {var3}"
+                    }
                 },
                 "status": 0
             },{
@@ -336,12 +339,13 @@
                         ]
                     }
                 ],
-                "template": {
-                    "engine": "json",
-                    "message": "ON:register {jsonobject}"
-                },
-                "logtarget": {
-                    "file": "/var/log/demo2/demo.log"
+                "target": {
+                    "type": "logfile",
+                    "file": "/var/log/demo2/demo.log",
+                    "template": {
+                        "engine": "json",
+                        "message": "ON:register {jsonobject}"
+                    }
                 },
                 "status": 0
             }
