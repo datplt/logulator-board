@@ -3,7 +3,7 @@
 jQuery(document).ready(function( $ ) {
   var clientManager = null;
   window.addEventListener('load', function() {
-    $.getJSON("config/agents.json", {}).done(function( agents ) {
+    $.getJSON("config/local.json", {}).done(function( agents ) {
       clientManager = new ClientManager({
         agents: agents
       });
