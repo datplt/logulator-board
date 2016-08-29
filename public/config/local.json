@@ -136,6 +136,50 @@
                     }
                 },
                 "status": 0
+            },{
+                "id": "demo4",
+                "delaytime": {
+                    "segment": 500,
+                    "offset": 10
+                },
+                "delaytimeRange": {
+                    "segmentMin": 100,
+                    "segmentMax": 5000,
+                    "segmentStep": 5,
+                    "offsetMin": 0,
+                    "offsetMax": 100,
+                    "offsetStep": 1
+                },
+                "tick": {
+                    "amount": 60,
+                    "duration": 1000
+                },
+                "model": [
+                    {
+                        "name": "phone",
+                        "type": "choice",
+                        "list": [
+                            "+84912345678",
+                            "+84921345679",
+                            "+84912345676",
+                            "+84912345645"
+                        ]
+                    }, {
+                        "name": "verifyCode",
+                        "type": "choice",
+                        "list": [ "2385", "3487", "0923", "1288"]
+                    }, {
+                        "name": "password",
+                        "type": "choice",
+                        "list": ["s3cr3t", "myg0d", "web4pp"]
+                    }
+                ],
+                "target": {
+                    "type": "mongodb",
+                    "connectionString": "mongodb://localhost:27017/logulatorLog",
+                    "collectionName": "log"
+                },
+                "status": 0
             }
         ]
     }
