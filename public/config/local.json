@@ -136,6 +136,62 @@
                     }
                 },
                 "status": 0
+            },{
+                "id": "demo5",
+                "delaytime": {
+                    "segment": 500,
+                    "offset": 10
+                },
+                "delaytimeRange": {
+                    "segmentMin": 100,
+                    "segmentMax": 5000,
+                    "segmentStep": 5,
+                    "offsetMin": 0,
+                    "offsetMax": 100,
+                    "offsetStep": 1
+                },
+                "tick": {
+                    "amount": 60,
+                    "duration": 1000
+                },
+                "model": [
+                    {
+                        "name": "var1",
+                        "type": "boolean"
+                    }, {
+                        "name": "var2",
+                        "type": "integer",
+                        "min": 5,
+                        "max": 1000
+                    }, {
+                        "name": "var3",
+                        "type": "float",
+                        "min": 0.0,
+                        "max": 500
+                    }, {
+                        "name": "var4",
+                        "type": "string",
+                        "min": 10,
+                        "max": 60
+                    }, {
+                        "name": "var6",
+                        "type": "choice",
+                        "list": [
+                            "String 1",
+                            "String 2",
+                            "String 3",
+                            "String 4"
+                        ]
+                    }, {
+                        "name": "var5",
+                        "type": "datetime"
+                    }
+                ],
+                "target": {
+                    "type": "restapi",
+                    "host": "http://192.168.2.241:9200/logulator/demo5"
+                },
+                "status": 0
             }
         ]
     }
